@@ -18,7 +18,7 @@ pd.set_option('display.width', 10000)
 
 #os.chdir("Techstack/ML/property_case/")
 
-# Import dataset 
+# Import dataset
 rawDf = pd.read_csv("PropertyPrice_Data.csv")
 predictionDf = pd.read_csv("PropertyPrice_Prediction.csv")
 # Analyze Data
@@ -33,9 +33,9 @@ from sklearn.model_selection import train_test_split
  
 # Splitted Randomlly: 
 #     - To control randomness, so that your model when broken in test,split 
-#     doesn't break on re run with different accuracy, we use random_state
+#       doesn't break on re run with different accuracy, we use random_state
 #     - Give any value to random_state it does not effect on the basis low or 
-#     high value
+#       high value
 
 
 trainDf, testDf = train_test_split(rawDf, train_size=0.8, random_state=150)
@@ -141,12 +141,12 @@ for col in categDf.columns:
 #############################################
 
 # Dummy Variables: Process of converting categorical columns to a variable that
-    #  machine can understand
+# machine can understand
 
 # n-1 columns are sufficient for giving information to machine about the data
 
 # Alias coefficients / Perfect Multicolinearity: When dummy variables are created 
-    # and we don't drop any column.
+#                                                and we don't drop any column.
 
 
 # Why dummy variables create?
@@ -157,9 +157,9 @@ for col in categDf.columns:
 
 fullRawDummy = pd.get_dummies(fullRaw, drop_first=True) 
 # drop_first to remove one sub category from categorical value to avoid 
-    # perfect multicolinearity. Will ensure you get n-1 dummies.
-        # - For eg Source with Train,Test,Prediction will come out as 
-            # Source_Train, Source_Test
+# perfect multicolinearity. Will ensure you get n-1 dummies.
+    # - For eg Source with Train,Test,Prediction will come out as 
+    #   Source_Train, Source_Test
 
 fullRaw.shape
 fullRawDummy.shape  # 13 columns were added
@@ -169,13 +169,13 @@ fullRawDummy.shape  # 13 columns were added
 ########################
 
 # Because of dummy creation, Model can reccognize its presence but not gather its
-    # coefficients, hence to balance this we need constant.
+# coefficients, hence to balance this we need constant.
 
 # In python, linear regression does not account for intercept by default.
 
 # So we need to add constant in the dataframe - a column called 
-    # as "const" with all values as 1, while applying the regression model, its values 
-        # will be updated automatically
+# as "const" with all values as 1, while applying the regression model, 
+# its values will be updated automatically
 
 # If intercept not added
     # - Coefficients value will increase
@@ -233,7 +233,7 @@ tempMaxVIF = 5 # This will be calculated in every iteration of loop
 maxVIFCutOff = 5 # 5 is recommended cutoff value for Linear Regression
 
 # Working on temp because we will be removing some columns which we ll check later to 
-    # remove or not from orignal trainX
+# remove or not from orignal trainX
 trainXCopy = trainX.copy() 
 
 counter = 1 # Not important
@@ -246,7 +246,7 @@ while(tempMaxVIF >= maxVIFCutOff):
     tempVIFdf = pd.DataFrame()
 
     # Calculate VIF using List Comprehension
-        # trainXCopy.values -> return narray with headers removed.
+        # - trainXCopy.values -> return narray with headers removed.
     tempVIFdf["VIF"] = [variance_inflation_factor(trainXCopy.values, i) for i in range(
         trainXCopy.shape[1])]
     
@@ -257,7 +257,7 @@ while(tempMaxVIF >= maxVIFCutOff):
     tempVIFdf.dropna(inplace=True)
 
     # Sort the Columns on basis of VIF values in descending order, and then pick the top 
-        # most column name
+    # most column name
     tempColumnName = tempVIFdf.sort_values(["VIF"],ascending=False).iloc[0,1]
 
     # Store the max VIF value in tempMaxVIF
