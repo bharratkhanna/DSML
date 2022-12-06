@@ -16,7 +16,7 @@ pd.set_option('display.width', 10000)
 
 # Set working Directory
 
-#os.chdir("Techstack/ML/property_case/")
+# os.chdir("Techstack/ML/property_case/")
 
 # Import dataset
 rawDf = pd.read_csv("PropertyPrice_Data.csv")
@@ -263,13 +263,15 @@ while(tempMaxVIF >= maxVIFCutOff):
     # Store the max VIF value in tempMaxVIF
     tempMaxVIF = tempVIFdf.sort_values(["VIF"],ascending=False).iloc[0,0]
 
-    print(f'{counter}: {tempColumnName}') # Debugger
-
     if (tempMaxVIF >= maxVIFCutOff): # Check whether its VIF is above 5 or not
 
         # Remove the highest VIF valued column from trainXCopy
         trainXCopy.drop(tempColumnName,axis=1,inplace=True)
+        
+        # Append Column name as summary analysis of operation
         highVIFColumnNames.append(tempColumnName)
+
+        print(f'{counter}: {tempColumnName}') # Debugger
 
     counter += 1
 
@@ -298,6 +300,149 @@ m1ModelDef = OLS(trainY,trainX) # (Dependent,Independent) Defines the model
 m1ModelBuild = m1ModelDef.fit() # Building Model
 m1ModelBuild.summary() # This is model output summary
 
+# Summary Glossry:-
+
+# - R Squared: SSR(Sum of Squared due to Regression)
+# - Adjusted R-squared: This is penalty on R^2 for a a non significant variable
+# - coeff: These are the calculated coefficient B_0,B_1,B_3....
+# - std error: It shows how well approximated sample means are
+# - t: This is t-score (Model uses Student-t distribution even n > 30)
+# - P value for t: Hypothesis P value (1 - t)
+    # - Signifcant Columns: p value < 0.05
+    # - Non Significant Columns: p value > 0.5
+# - 0.025 For alpha 0.05
+# - 0.975 For t calculation 
+
+# Hypothesis: Independent Variabbles don't impact the Dependent Column
+    # - p value >= 0.05 Accepts the Null Hypothesis theory
+    # - p value < 0.05 Rejects the Null Hypothesis Theory
+
+# Alternate Hypothesis: Independent Variabled impact the Dependent Column
+    # So we have to take samples which proove this theory that is p < 0.05
+
+# 1.96 is our Confidenc e Interval mena 95% for Hypothesis
+
+#%%
+
+######################
+#  Model Optimization
+######################
+
+# Extract / Identify p -values from model
+dir(m1ModelBuild)
+m1ModelBuild.pvalues
+
+# We will use loop and discard independent variables based on p-value in decreasing order
+# The loop concept is similar to VIF loop
+
+tempMaxPvalue = 0.1
+maxPvalueCutoff = 0.1
+trainXCopy = trainX.copy()
+counter = 1
+highPvalueColumnNames = list()
+
+while tempMaxPvalue >= maxPvalueCutoff:
+
+    # Create empty DataFrame to store p values
+    tempPvalueDf = pd.DataFrame()
+
+    # Build model in iteration
+    tempModel = OLS(trainY,trainXCopy).fit()
+    
+    # Create Column "p_values" to store p values
+    tempPvalueDf["p_values"] = tempModel.pvalues
+
+    # Create Column name group corresponding to p values
+    tempPvalueDf["Column_Name"] = trainXCopy.columns
+
+    # Dop NaN in case of calculation error by model
+    tempPvalueDf.dropna(inplace=True)
+
+    # Sort DF according to p values in decreasing order and store highest value
+    tempMaxPvalue =  tempPvalueDf.sort_values("p_values", ascending=False).iloc[0,0]
+
+    # Sort DF according to p_value in decreasing order and store highest column name
+    tempColumnName = tempPvalueDf.sort_values("p_values", ascending=False).iloc[0,1]
+
+    if tempMaxPvalue >= maxPvalueCutoff:
+        
+        # Drop column whose p_values higher than Cutoff
+        trainXCopy.drop(tempColumnName, axis = 1, inplace = True)
+
+        # Append Column name as a summary analysis
+        highPvalueColumnNames.append(tempColumnName)
+
+        print(f'{counter}: {tempColumnName}') # Debugger
+    
+    counter += 1
+
+# Summary Analysis    
+highPvalueColumnNames
+
+# Drop High Pvalue Columns in orignal dataset
+trainX.drop(highPvalueColumnNames,axis=1,inplace=True)
+testX.drop(highPvalueColumnNames,axis=1,inplace=True)
+predictionDf.drop(highPvalueColumnNames, axis=1, inplace=True)
+
+trainX.shape
+testX.shape
+
+# Summary of model
+Model = OLS(trainY,trainX).fit()
+Model.summary()
+
+#%%
+
+############################
+# Model Prediction: Testing
+############################
+
+test_pred = Model.predict(testX)
+test_pred[0:6]
+testY[0:6]
+
+#%%
+
+#########################
+# Model Diagnostic Plots
+#########################
+
+# Homoskedasticity Check
+plt.figure(figsize=(20,20))
+sns.scatterplot(Model.fittedvalues, Model.resid) # Should be close to constant
+# Scattered because of Outliers, can be also be because of Categorical Columns too
+
+# Normality of Residual Errors Check (Model Error)
+plt.figure(figsize=(20,20))
+sns.distplot(Model.resid) # Should be cclose to normal distribution
+
 
 # %%
-print("Hello")
+
+###################
+# Model Evaluation
+###################
+
+# RMSE (Root Mean Squared Error)
+np.sqrt(np.mean( (testY - test_pred)**2 )) 
+# This means an average house price have an error of +- error of 56140
+
+# MAPE (Mean Absolute Percentage Erro)
+np.mean(np.abs( (testY -  test_pred)/testY ))*100
+# This means on an average, the house price prediction would have +- error of 20%
+
+# generall Mape, under 10% is considered very good, and anything under 20% is reasonable
+
+#%%
+
+##########################
+# Model Prediction: Final
+##########################
+
+# Predict Final Data
+predictionDf["Predicted_Sale_Price"] = Model.predict(predictionDf.drop("Sale_Price",axis=1))
+
+# Save to CSV
+predictionDf.to_csv("Prediction_Propert_Sales.csv")
+
+########################################################################################################
