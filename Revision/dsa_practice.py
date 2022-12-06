@@ -63,12 +63,31 @@ def insertion_sort(arr):
             j = j - 1
         arr[j+1] = key
     return arr,count
-    
+
+# Merging Sorted Elements
+
+def merge(A,B):
+    n = len(A)
+    m = len(B)
+    i,j = 0,0
+    C = list()
+    while(len(C) != n+m):
+        if A[i] < B[j]:
+            C.append(A[i])
+            i+=1
+            if i == n:
+                C.extend(B[j:])
+        else:
+            C.append(B[j])
+            j+=1
+            if j == m:
+                C.extend(A[i:])
+    return C
+
 
 # DSA
 
   # Searching
-
 print("Searching Algorithms:-")
 print(binary_search([1,2,3,5,8], 1))
 print(Sequential_Search([11,23,58,31,56,77,43,12,65,19],31))
@@ -81,13 +100,18 @@ print(insertion_sort([14,46,43,27,57,41,45,21,70]))
 
 arr = list(range(1000,1,-2))
 
+# Worst Case Sorting Algorithms
 print("\nSorting Worst Case Algorithms:-")
 print(bubble_sort(arr)[1])
 print(selection_sort(arr)[1])
 print(insertion_sort(arr)[1])
 
-
+# Best Case Sorting Algorithms
 print("\nSorting Best Case Algorithms:-")
 print(bubble_sort(arr)[1])
 print(selection_sort(arr)[1])
 print(insertion_sort(arr)[1])
+
+# Merge Sorted Elemets
+print(f'\nMerged Sorted Array:-')
+print(f'{merge([1,3,5,7,9],[2,4,6,8])}\n')
