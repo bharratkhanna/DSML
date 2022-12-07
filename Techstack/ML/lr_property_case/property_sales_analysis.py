@@ -261,6 +261,7 @@ while(tempMaxVIF >= maxVIFCutOff):
 
     # Sort the Columns on basis of VIF values in descending order, and then pick the top 
     # most column name
+    
     tempColumnName = tempVIFdf.sort_values(["VIF"],ascending=False).iloc[0,1]
 
     # Store the max VIF value in tempMaxVIF
@@ -309,21 +310,20 @@ m1ModelBuild.summary() # This is model output summary
 # - Adjusted R-squared: This is penalty on R^2 for a a non significant variable
 # - coeff: These are the calculated coefficient B_0,B_1,B_3....
 # - std error: It shows how well approximated sample means are
-# - t: This is t-score (Model uses Student-t distribution even n > 30)
+# - t: This is t-score (Model uses Student-t distribution even n > 30 & t>30==z)
 # - P value for t: Hypothesis P value (1 - t)
     # - Signifcant Columns: p value < 0.05
     # - Non Significant Columns: p value > 0.5
-# - 0.025 For alpha 0.05
-# - 0.975 For t calculation 
+# - 0.025 For alpha = 0.05/2 (Because it is 2 sided)
+# - 0.975 1-alpha, For t calculation -> t = t_{1-aplha}
 
-# Hypothesis: Independent Variabbles don't impact the Dependent Column
+# Null Hypothesis: Independent Variabbles don't impact the Dependent Column
     # - p value >= 0.05 Accepts the Null Hypothesis theory
-    # - p value < 0.05 Rejects the Null Hypothesis Theory
 
-# Alternate Hypothesis: Independent Variabled impact the Dependent Column
-    # So we have to take samples which proove this theory that is p < 0.05
+# Alternate Hypothesis: Independent Variables impact the Dependent Column
+    # - So we have to take samples which proove this theory that is p < 0.05
 
-# 1.96 is our Confidenc e Interval mena 95% for Hypothesis
+# 1.96 is our Confidence Interval means 95% for Hypothesis
 
 #%%
 
@@ -332,7 +332,7 @@ m1ModelBuild.summary() # This is model output summary
 ######################
 
 # Extract / Identify p -values from model
-dir(m1ModelBuild)
+dir(m1ModelBuild) # Insight into model functions
 m1ModelBuild.pvalues
 
 # We will use loop and discard independent variables based on p-value in decreasing order
