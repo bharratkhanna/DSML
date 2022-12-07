@@ -261,7 +261,6 @@ while(tempMaxVIF >= maxVIFCutOff):
 
     # Sort the Columns on basis of VIF values in descending order, and then pick the top 
     # most column name
-    
     tempColumnName = tempVIFdf.sort_values(["VIF"],ascending=False).iloc[0,1]
 
     # Store the max VIF value in tempMaxVIF

@@ -85,6 +85,14 @@ def merge(A,B):
     return C
 
 
+def tokens(arr,token):
+    arr = arr.split()
+    n = len(arr)
+    tokens = list()
+    for i in range(n - token + 1):
+        tokens.append(arr[i:i + token])
+    return tokens
+
 # DSA
 
   # Searching
@@ -115,3 +123,7 @@ print(insertion_sort(arr)[1])
 # Merge Sorted Elemets
 print(f'\nMerged Sorted Array:-')
 print(f'{merge([1,3,5,7,9],[2,4,6,8])}\n')
+
+# Tokens 
+print(f'\nTokeniztion:-')
+print(tokens("be the change you want to be in the",2),"\n")
