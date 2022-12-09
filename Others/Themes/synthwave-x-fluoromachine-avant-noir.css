@@ -29,7 +29,7 @@ Base / Root
   --sw-yellow-bright: #fff84a;
 }
 
-/* Scanlines */
+/* Scanlines 
 body:before {
   content: '';
     position: absolute;
@@ -42,7 +42,7 @@ body:before {
     opacity: 0.5;
     background-image: repeating-linear-gradient(to bottom, transparent 0 ,transparent 2px, #00000033 2px, #00000033 4px);
 }
-
+*/
 /* Scrollbars */
 .vs-dark .monaco-scrollable-element>.scrollbar>.slider {
   background: rgb(153, 99, 255);

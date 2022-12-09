@@ -1,5 +1,0 @@
-This is new line I am adding to file.
-We will see difference between read and write.
-I am opening file in append mode.
-After opening this file I am adding new lines.
-Let us see the difference between write and append mode.
