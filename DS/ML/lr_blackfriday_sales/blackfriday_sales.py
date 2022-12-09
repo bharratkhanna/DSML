@@ -116,10 +116,6 @@ bfSalesDf.head()
 # Bi-variate Analysis : 
 ########################
 
-
-# Bi-variate Analysis : 
-########################
-
 analysisDf = bfSalesDf[bfSalesDf["Purchase"].isnull()==False]
 
 # Continuous
