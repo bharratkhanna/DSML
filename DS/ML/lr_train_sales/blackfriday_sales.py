@@ -30,7 +30,7 @@ train_bfSalesDf = pd.read_csv('train_blackfriday_sales.csv')
 predict_bfSaleDf = pd.read_csv('test_blackfriday_sales.csv')
 
 
-# Glance at a dataset
+# Glance at the dataset
 
 train_bfSalesDf.head()
 predict_bfSaleDf.head()
