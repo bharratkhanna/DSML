@@ -116,22 +116,40 @@ bfSalesDf.head()
 # Bi-variate Analysis : 
 ########################
 
+
+# Bi-variate Analysis : 
+########################
+
 analysisDf = bfSalesDf[bfSalesDf["Purchase"].isnull()==False]
 
 # Continuous
 plt.figure(figsize=(10,10))
 sns.heatmap(bfSalesDf.corr().round(decimals=2), vmin=-1,vmax=1,annot=True)
 
+plt.figure(figsize=(10,10))
+analysisDf2 = analysisDf.drop("Product_ID",axis=1).copy()
+sns.pairplot(analysisDf2)
+plt.tight_layout()
 
 objectDf = analysisDf.select_dtypes(include=object)
 objectDf["Purchase"] = bfSalesDf[bfSalesDf["Purchase"].isnull()==False]["Purchase"]
 
 # Categoriacal
 for col in objectDf.columns:
+   
    if col != "Purchase":
       plt.figure(figsize=(10,10))
       sns.boxplot(y = objectDf["Purchase"], x = objectDf[col])
       plt.show()
+
+for col in analysisDf.columns:
+   for hue in analysisDf.columns:
+      if hue != col and hue != "Product_ID" and col != "Product_ID":
+         plt.figure(figsize=(10,10))
+         sns.barplot(y=analysisDf["Purchase"],x=analysisDf[col],
+                                                      hue=analysisDf[hue])
+         plt.show()
+
 # %%
 
 # Outliers
