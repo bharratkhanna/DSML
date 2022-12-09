@@ -72,7 +72,6 @@ bfSalesDf.head()
 
 # %%
 
-
 # Imputing NaN's
 ##################
 
@@ -110,6 +109,7 @@ bfSalesDf["Stay_In_Current_City_Years"] = bfSalesDf["Stay_In_Current_City_Years"
 
 bfSalesDf["Product_ID"] = bfSalesDf["Product_ID"].apply(product_id)
 bfSalesDf["Product_ID"] = bfSalesDf["Product_ID"].astype(int)
+bfSalesDf.head()
 
 # %%
 
@@ -168,6 +168,7 @@ max_val_id = max(bfSalesDf["Product_ID"])
 min_val_id = min(bfSalesDf["Product_ID"])
 bfSalesDf["Product_ID"] = bfSalesDf["Product_ID"].apply(norm,args=(max_val_id,min_val_id))
 
+
 #%% 
 
 # Dummies Creation
@@ -212,12 +213,6 @@ trainDfY = trainDf["Purchase"].copy()
 
 testDfX = testDf.drop("Purchase", axis=1).copy()
 testDfY = testDf["Purchase"].copy()
-
-trainDfX.head()
-trainDfY.head()
-
-testDfX.head()
-testDfY.head()
 
 
 # %%
@@ -280,10 +275,26 @@ Model.summary()
 
 test_pred = Model.predict(testDfX)
 
-# RMSE
-(np.mean( (testDfY-test_pred)**2 ))
+# MSE
+(np.mean( (testDfY-test_pred)**2 )) # Result is shit
 # MAPE
 np.mean(np.abs( (testDfY-test_pred))/testDfY ) * 100
 
 testDfX
+
 # %%
+
+# BLUE Check
+###############
+
+# Homoskedadticity
+plt.figure(figsize=(10,10))
+sns.scatterplot(Model.fittedvalues, Model.resid)
+
+# Normalization of Residuals
+plt.figure(figsize=(10,10))
+sns.distplot(Model.resid)
+
+
+# Does not satisfy Blue, either Model should be reevaluated or There is no
+#  significant relation between Independent & dependent features
