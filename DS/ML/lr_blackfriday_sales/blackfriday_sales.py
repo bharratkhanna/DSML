@@ -137,13 +137,13 @@ for col in objectDf.columns:
       sns.boxplot(y = objectDf["Purchase"], x = objectDf[col])
       plt.show()
 
-for col in analysisDf.columns: # ["Occupation", "Product_Category_1", "Product_Category_2"] or ["Gender","Stay_In_Currect_City_Years",City_Category,Age]
-   for hue in analysisDf.columns: #["Gender","Stay_In_Currect_City_Years",City_Category,Age]
-      if hue != col and hue != "Product_ID" and col != "Product_ID":
-         plt.figure(figsize=(10,10))
-         sns.barplot(y=analysisDf["Purchase"],x=analysisDf[col],
-                                                      hue=analysisDf[hue])
-         plt.show()
+# for col in analysisDf.columns: # ["Occupation", "Product_Category_1", "Product_Category_2"] or ["Gender","Stay_In_Currect_City_Years",City_Category,Age]
+#    for hue in analysisDf.columns: #["Gender","Stay_In_Currect_City_Years",City_Category,Age]
+#       if hue != col and hue != "Product_ID" and col != "Product_ID":
+#          plt.figure(figsize=(10,10))
+#          sns.barplot(y=analysisDf["Purchase"],x=analysisDf[col],
+#                                                       hue=analysisDf[hue])
+#          plt.show()
 
 # %%
 
