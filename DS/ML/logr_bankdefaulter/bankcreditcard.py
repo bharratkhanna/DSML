@@ -65,7 +65,7 @@ fullRaw["Default_Payment"].value_counts()
 
 # Split 0s & 1s
 fullRaw.loc[fullRaw["Source"] == "Train", "Default_Payment"].value_counts() / fullRaw[
-                                                fullRaw["Source"] == "Train"].shape[0]
+                                            fullRaw["Source"] == "Train"].shape[0]
     # Minority Class greater than 10%, that is 0.22
     
     # Another way to do
@@ -150,3 +150,127 @@ pdf.close()
 
 #--------------------------------------------------------------------------------------|
 # %%
+
+# Bivariate Analysis - For Categorical Features (Histogram)
+############################################################
+
+categoricalVars = trainDf.columns[trainDf.dtypes == "object"]
+categoricalVars
+
+fileName = "Categorical Bivariate Analysis.pdf"
+pdf = PdfPages(fileName)
+for colNumber, colName in enumerate(categoricalVars):
+    if colName == "Source": continue
+    plt.figure(figsize=(10,10))
+    plt.tight_layout()
+    sns.histplot(trainDf, x=colName, hue="Default_Payment", stat="probability",
+                                                                     multiple="fill")
+    pdf.savefig(colNumber+1)
+pdf.close()
+
+#--------------------------------------------------------------------------------------|
+# %%
+
+# Dummy Creation
+##################
+
+fullRawDf = pd.get_dummies(fullRaw, drop_first=True)
+    # Avoiding Perfect Multicolinearity
+fullRawDf.shape
+
+#--------------------------------------------------------------------------------------|
+# %%
+
+# Sampling Dependent & Independent
+####################################
+
+fullRawDf.columns
+
+train = fullRawDf[fullRawDf["Source_Train"] == 1].copy()
+test = fullRawDf[fullRawDf["Source_Train"] == 0].copy()
+
+# Drop Source_Train Column
+train.drop("Source_Train",axis=1,inplace=True)
+test.drop("Source_Train",axis=1,inplace=True)
+
+# Divide into X & Y
+trainX = train.drop("Default_Payment",axis=1).copy()
+trainY = train["Default_Payment"].copy()
+
+testX = test.drop("Default_Payment",axis=1).copy()
+testY = test["Default_Payment"]
+
+trainX.shape
+testX.shape
+ 
+#--------------------------------------------------------------------------------------|
+# %%
+
+# Add Intercept Column
+#######################
+
+from statsmodels.api import add_constant
+
+trainX = add_constant(trainX)
+testX = add_constant(testX)
+
+trainX.shape
+testX.shape
+
+#--------------------------------------------------------------------------------------|
+# %%
+
+# VIF Check
+############
+
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+maxVIF = 10 # In Logistic Regression, MultiColinearity is not a big issue
+tempVIF = 10
+highVIFColNames = list()
+tempTrainX = trainX.copy()
+
+while(tempVIF >= maxVIF):
+
+    tempVIFDf = pd.DataFrame()
+    
+    tempVIFDf["VIF"] = [variance_inflation_factor(tempTrainX.values,colNum)
+                                            for colNum in range(tempTrainX.shape[1])]
+    tempVIFDf["Column_Name"] = tempTrainX.columns
+
+    tempVIFDf.dropna(inplace=True)
+
+    tempVIF = tempVIFDf.sort_values("VIF",ascending=False).iloc[0,0]
+    tempColName = tempVIFDf.sort_values("VIF",ascending=False).iloc[0,1]
+
+    if tempVIF >= maxVIF:
+        tempTrainX.drop(tempColName,axis=1,inplace=True)
+        highVIFColNames.append(tempColName)
+
+highVIFColNames
+
+highVIFColNames.remove("const")
+trainX.drop(highVIFColNames,axis=1,inplace=True)
+testX.drop(highVIFColNames,axis=1,inplace=True)
+
+trainX.shape
+testX.shape
+
+#--------------------------------------------------------------------------------------|                                                    
+# %%
+
+# Model Building
+#################
+
+from statsmodels.api import Logit
+
+Model = Logit(trainY,trainX).fit()
+Model.summary()
+
+    # Converged: True
+    # Refers to the point where model is able to find best set of values for
+    # coefficients
+
+#--------------------------------------------------------------------------------------|
+# %%
+

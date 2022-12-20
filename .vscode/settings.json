@@ -1,4 +1,19 @@
 {
     "python.analysis.typeCheckingMode": "off",
-    "editor.accessibilitySupport": "off"
+    "editor.accessibilitySupport": "off",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "askForPassword": true,
+            "driver": "MySQL",
+            "name": "MySQL",
+            "username": "root",
+            "database": "learnsql"
+        }
+    ]
 }
