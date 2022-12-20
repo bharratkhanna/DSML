@@ -97,7 +97,9 @@ fullRaw.shape
 variableToUpdate = "Gender"
 fullRaw[variableToUpdate].value_counts()
     # 1 indicates Male, 2 indicates female
-fullRaw[variableToUpdate].replace({1:"Male", 2:"Female"},inplace=True)
+fullRaw[variableToUpdate].replace({
+    1:"Male",
+    2:"Female"},inplace=True)
 fullRaw[variableToUpdate].value_counts()
 
 # Academic_Qualification
@@ -128,6 +130,7 @@ fullRaw[variableToUpdate].value_counts()
 
 # Bivariate Analysis - For Continuous Features (BoxPlot)
 ##########################################################
+    # Box Plot because our dependent is categorical
 
 trainDf = fullRaw.loc[fullRaw["Source"] == "Train"]
 continuousVars = trainDf.columns[trainDf.dtypes != "object"]
