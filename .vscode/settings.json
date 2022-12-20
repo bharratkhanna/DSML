@@ -4,16 +4,17 @@
     "sqltools.connections": [
         {
             "mysqlOptions": {
-                "authProtocol": "default"
+                "authProtocol": "xprotocol"
             },
             "previewLimit": 50,
             "server": "localhost",
-            "port": 3306,
-            "askForPassword": true,
+            "port": 33060,
             "driver": "MySQL",
             "name": "MySQL",
             "username": "root",
-            "database": "learnsql"
+            "database": "sys",
+            "connectionTimeout": 1000,
+            "password": "monicaa28"
         }
     ]
 }
