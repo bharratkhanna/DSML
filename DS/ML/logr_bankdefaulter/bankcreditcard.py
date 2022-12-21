@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
 #--------------------------------------------------------------------------------------|
+
 #%%
 
 # Read Dataset
@@ -18,6 +19,7 @@ from sklearn.model_selection import train_test_split
 fullRaw = pd.read_csv("BankCreditCard.csv")
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Sampling - Divide into train/test
@@ -35,6 +37,7 @@ fullRaw.shape
 
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Univariate Analysis
@@ -53,6 +56,7 @@ fullRaw.isnull().sum()
 
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Event Rate
@@ -73,6 +77,7 @@ fullRaw.loc[fullRaw["Source"] == "Train", "Default_Payment"].value_counts() / fu
         #                               "Default_Payment"].value_counts(normalize=True)
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Statistical Summary
@@ -86,6 +91,7 @@ fullRaw.shape
 
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Use Data Description to convert Numerical to Categorical
@@ -126,6 +132,7 @@ fullRaw[variableToUpdate].value_counts()
 
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Bivariate Analysis - For Continuous Features (BoxPlot)
@@ -149,6 +156,7 @@ pdf.close()
 
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Bivariate Analysis - For Categorical Features (Histogram)
@@ -169,6 +177,7 @@ for colNumber, colName in enumerate(categoricalVars):
 pdf.close()
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Dummy Creation
@@ -179,6 +188,7 @@ fullRawDf = pd.get_dummies(fullRaw, drop_first=True)
 fullRawDf.shape
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Sampling Dependent & Independent
@@ -204,6 +214,7 @@ trainX.shape
 testX.shape
  
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # Add Intercept Column
@@ -218,6 +229,7 @@ trainX.shape
 testX.shape
 
 #--------------------------------------------------------------------------------------|
+
 # %%
 
 # VIF Check
@@ -273,4 +285,87 @@ Model.summary()
 
 #--------------------------------------------------------------------------------------|
 # %%
+
+# Significant Columns
+#######################
+
+tempPval = 0.05
+maxPval = 0.05
+tempTrainX = trainX.copy()
+hightPvalColumns = list()
+
+while tempPval >= maxPval:
+
+    Model = Logit(trainY,tempTrainX).fit()
+
+    tempPvalDf = pd.DataFrame()
+
+    tempPvalDf["Pval"] = Model.pvalues
+    tempPvalDf["Column_Name"] = tempTrainX.columns
+
+    tempPvalDf.dropna(inplace=True)
+
+    tempPval = tempPvalDf.sort_values("Pval",ascending=False).iloc[0,0]
+    tempColName = tempPvalDf.sort_values("Pval",ascending=False).iloc[0,1]
+
+    if tempPval >= maxPval:
+        tempTrainX.drop(tempColName,axis=1,inplace=True)
+        hightPvalColumns.append(tempColName)
+    
+    hightPvalColumns
+
+    trainX.drop(hightPvalColumns,axis=1,inplace=True)
+    testX.drop(hightPvalColumns,axis=1,inplace=True)
+    trainX.shape
+
+
+#--------------------------------------------------------------------------------------|
+
+# %%
+
+# Model Prediction
+###################
+
+Model = Logit(trainY,trainX).fit()
+
+testX["Default_Prob"] = Model.predict(testX) # Stored value in Probability
+testX["Default_Prob"][:6]
+testY[:6]
+
+#--------------------------------------------------------------------------------------|
+
+# %%
+
+# Classification
+#################
+
+testX["Test_Class"] = np.where(testX["Default_Prob"] >= 0.5,1,0)
+testX["Test_Class"][:6]
+
+
+#--------------------------------------------------------------------------------------|
+
+# %%
+
+# Model Evaluation
+####################
+
+
+# Confusion Matrix
+Confusion_Mat = pd.crosstab(testX["Test_Class"],testY) # R<C Format
+Confusion_Mat
+
+# Accuracy Check - Manual
+sum(np.diagonal(Confusion_Mat)) *100 / testX.shape[0]
+
+# Sklearn Classification Report
+from sklearn.metrics import classification_report
+print(classification_report(testY,testX["Test_Class"]))
+
+    # Support -> No of rows for category
+    # Macro Avg -> Sum of Categories Average on specific Test like 0.84+0.66/2
+    # Weighted Average = 0.84*7052 + 0.66*1948 / 9000 (Multiply Rows too)
+
+    # Precision/Recall.... consider 0 as TP when calculated for 0 & 1 as TP for 1
+#--------------------------------------------------------------------------------------|
 
