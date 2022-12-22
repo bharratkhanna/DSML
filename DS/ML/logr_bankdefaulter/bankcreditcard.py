@@ -292,7 +292,7 @@ Model.summary()
 tempPval = 0.05
 maxPval = 0.05
 tempTrainX = trainX.copy()
-hightPvalColumns = list()
+highPvalColumns = list()
 
 while tempPval >= maxPval:
 
@@ -310,13 +310,13 @@ while tempPval >= maxPval:
 
     if tempPval >= maxPval:
         tempTrainX.drop(tempColName,axis=1,inplace=True)
-        hightPvalColumns.append(tempColName)
-    
-    hightPvalColumns
+        highPvalColumns.append(tempColName)
 
-    trainX.drop(hightPvalColumns,axis=1,inplace=True)
-    testX.drop(hightPvalColumns,axis=1,inplace=True)
-    trainX.shape
+
+highPvalColumns
+trainX.drop(highPvalColumns,axis=1,inplace=True)
+testX.drop(highPvalColumns,axis=1,inplace=True)
+trainX.shape
 
 
 #--------------------------------------------------------------------------------------|
@@ -328,8 +328,8 @@ while tempPval >= maxPval:
 
 Model = Logit(trainY,trainX).fit()
 
-testX["Default_Prob"] = Model.predict(testX) # Stored value in Probability
-testX["Default_Prob"][:6]
+testX["Test_Prob"] = Model.predict(testX) # Stored value in Probability
+testX["Test_Prob"][:6]
 testY[:6]
 
 #--------------------------------------------------------------------------------------|
@@ -339,7 +339,7 @@ testY[:6]
 # Classification
 #################
 
-testX["Test_Class"] = np.where(testX["Default_Prob"] >= 0.5,1,0)
+testX["Test_Class"] = np.where(testX["Test_Prob"] >= 0.5,1,0)
 testX["Test_Class"][:6]
 
 
@@ -367,5 +367,62 @@ print(classification_report(testY,testX["Test_Class"]))
     # Weighted Average = 0.84*7052 + 0.66*1948 / 9000 (Multiply Rows too)
 
     # Precision/Recall.... consider 0 as TP when calculated for 0 & 1 as TP for 1
+    # F1 Score is low for Defaulter, hence model is not beneficial for bank
+    
 #--------------------------------------------------------------------------------------|
 
+# %%
+
+# AUC/ROC Curve
+#################
+
+from sklearn.metrics import roc_curve,auc
+
+# Predict on train data
+Train_Prob = Model.predict(trainX)
+fpr,tpr, cutoff = roc_curve(trainY,Train_Prob)
+
+# Cut off Table Creation
+    # Best Cutt off is High TPR & Low FPR
+Cutoff_Table = pd.DataFrame()
+Cutoff_Table["FPR"] = fpr
+Cutoff_Table["TPR"] = tpr
+Cutoff_Table["Cuttoff"] = cutoff
+Cutoff_Table.shape
+
+# Plot cutoff_table 
+plt.figure(figsize=(20,10))
+sns.lineplot(x=Cutoff_Table["FPR"],y=Cutoff_Table["TPR"])
+plt.tight_layout() 
+
+# Area under Curve
+auc(fpr,tpr)
+
+#--------------------------------------------------------------------------------------|
+
+# %%
+
+# Imporve Model with Cut Off Point
+###################################
+
+Cutoff_Table["Difference"] = Cutoff_Table["TPR"] - Cutoff_Table["FPR"]
+
+# Euclidean Distance
+    # Highest TPR is 1
+    # Lowest FPR is 2
+Cutoff_Table["Distance"] = np.sqrt( (1-Cutoff_Table["TPR"])**2 +
+                                                             (0-Cutoff_Table["FPR"])**2 )
+
+# Most Appropriate Cutoff Point
+cutoffPoint = Cutoff_Table.sort_values("Difference",ascending=False).iloc[0,2]
+
+# Classify Model
+testX["Test_Class2"] = np.where(testX["Test_Prob"] >= cutoffPoint, 1, 0)
+
+# Confusion Matrix
+Confusion_Mat = pd.crosstab(testX["Test_Class2"],testY)
+Confusion_Mat
+
+print(classification_report(testY,testX["Test_Class2"]))
+
+#======================================================================================|
