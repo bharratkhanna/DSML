@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 #--------------------------------------------------------------------------------------|
 
-#%%
+# %%
 
 # Read Dataset
 #################
@@ -423,6 +423,7 @@ testX["Test_Class2"] = np.where(testX["Test_Prob"] >= cutoffPoint, 1, 0)
 Confusion_Mat = pd.crosstab(testX["Test_Class2"],testY)
 Confusion_Mat
 
+
 print(classification_report(testY,testX["Test_Class2"]))
 
-#======================================================================================|
+#====================================*******============================================|
