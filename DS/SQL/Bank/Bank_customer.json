@@ -1,0 +1,58 @@
+[
+ {
+   "customer_id": "123001",
+   "customer_name": "Oliver",
+   "Address": "225-5, Emeryville",
+   "state_code": "CA",
+   "Telephone": 1897614500
+ },
+ {
+   "customer_id": "123002",
+   "customer_name": "George",
+   "Address": "194-6,New brighton",
+   "state_code": "MN",
+   "Telephone": 1897617000
+ },
+ {
+   "customer_id": "123003",
+   "customer_name": "Harry",
+   "Address": "2909-5,walnut creek",
+   "state_code": "CA",
+   "Telephone": 1897617866
+ },
+ {
+   "customer_id": "123004",
+   "customer_name": "Jack",
+   "Address": "229-5, Concord",
+   "state_code": "CA",
+   "Telephone": 1897627999
+ },
+ {
+   "customer_id": "123005",
+   "customer_name": "Jacob",
+   "Address": "325-7, Mission Dist",
+   "state_code": "SFO",
+   "Telephone": 1897637000
+ },
+ {
+   "customer_id": "123006",
+   "customer_name": "Noah",
+   "Address": "275-9, saint-paul",
+   "state_code": "MN",
+   "Telephone": 1897613200
+ },
+ {
+   "customer_id": "123007",
+   "customer_name": "Charlie",
+   "Address": "125-1,Richfield",
+   "state_code": "MN",
+   "Telephone": 1897617666
+ },
+ {
+   "customer_id": "123008",
+   "customer_name": "Robin",
+   "Address": "3005-1,Heathrow",
+   "state_code": "NY",
+   "Telephone": 1897614000
+ }
+]

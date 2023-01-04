@@ -240,11 +240,13 @@ print(classification_report(testY,Test_Pred))
 
 from sklearn.model_selection import GridSearchCV
 
-n_estimators_list = [25,50,75,100,125,150,175,200]
-max_features_list = [5,6,7,8,9,11,12]
+n_estimators_list = [25,50,75]
+max_features_list = [5,7,9,11]
+min_samples_list = [5,10,25,50]
 
 param = {'n_estimators'    : n_estimators_list,
-        'max_features'    : max_features_list,}
+        'max_features'    : max_features_list,
+        'min_samples_leaf': min_samples_list}
 
 Grid_Search_Model = GridSearchCV(
     estimator=RandomForestClassifier(random_state=123),
@@ -254,8 +256,8 @@ Grid_Search_Model = GridSearchCV(
 tuneDf = pd.DataFrame.from_dict(Grid_Search_Model.cv_results_)
 
 
-RF_Final = RandomForestClassifier(random_state=123, n_estimators=200,max_features=12
-                                            ).fit(trainX,trainY)
+RF_Final = RandomForestClassifier(random_state=123, n_estimators=75, max_features=9,
+                                            min_samples_leaf=5).fit(trainX,trainY)
 
 Test_Pred = RF_Final.predict(testX)
 
@@ -263,5 +265,3 @@ pd.crosstab(testY,Test_Pred)
 print(classification_report(testY,Test_Pred))
 
 #===================================************=======================================|
-
-# %%

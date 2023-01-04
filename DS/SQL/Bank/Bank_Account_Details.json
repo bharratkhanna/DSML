@@ -1,0 +1,130 @@
+[
+ {
+   "Customer_id": "123001",
+   "Account_Number": "4000-1956-3456",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 200000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123001",
+   "Account_Number": "5000-1700-3456",
+   "Account_type": "RECURRING DEPOSITS",
+   "Balance_amount": 9400000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "S"
+ },
+ {
+   "Customer_id": "123002",
+   "Account_Number": "4000-1956-2001",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 400000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123002",
+   "Account_Number": "5000-1700-5001",
+   "Account_type": "RECURRING DEPOSITS",
+   "Balance_amount": 7500000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "S"
+ },
+ {
+   "Customer_id": "123003",
+   "Account_Number": "4000-1956-2900",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 750000,
+   "Account_status": "INACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123004",
+   "Account_Number": "5000-1700-6091",
+   "Account_type": "RECURRING DEPOSITS",
+   "Balance_amount": 7500000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "S"
+ },
+ {
+   "Customer_id": "123004",
+   "Account_Number": "4000-1956-3401",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 655000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123005",
+   "Account_Number": "4000-1956-5102",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 300000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123006",
+   "Account_Number": "4000-1956-5698",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 455000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123007",
+   "Account_Number": "5000-1700-9800",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 355000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123007",
+   "Account_Number": "4000-1956-9977",
+   "Account_type": "RECURRING DEPOSITS",
+   "Balance_amount": 7025000,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "S"
+ },
+ {
+   "Customer_id": "123007",
+   "Account_Number": "9000-1700-7777-4321",
+   "Account_type": "Credit Card",
+   "Balance_amount": 0,
+   "Account_status": "INACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123007",
+   "Account_Number": "5900-1900-9877-5543",
+   "Account_type": "Add-on Credit Card",
+   "Balance_amount": 0,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "S"
+ },
+ {
+   "Customer_id": "123008",
+   "Account_Number": "5000-1700-7755",
+   "Account_type": "SAVINGS",
+   "Balance_amount": 0,
+   "Account_status": "INACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123006",
+   "Account_Number": "5800-1700-9800-7755",
+   "Account_type": "Credit Card",
+   "Balance_amount": 0,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "P"
+ },
+ {
+   "Customer_id": "123006",
+   "Account_Number": "5890-1970-7706-8912",
+   "Account_type": "Add-on Credit Card",
+   "Balance_amount": 0,
+   "Account_status": "ACTIVE",
+   "Relationship_type": "S"
+ }
+]

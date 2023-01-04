@@ -1,0 +1,138 @@
+[
+ {
+   "Transaction_id": 1,
+   "Account_Number": "4000-1956-3456",
+   "Transaction_amount": -2000,
+   "Transcation_channel": "ATM withdrawl",
+   "Province": "CA",
+   "Transaction_Date": "13-01-2020"
+ },
+ {
+   "Transaction_id": 2,
+   "Account_Number": "4000-1956-2001",
+   "Transaction_amount": -4000,
+   "Transcation_channel": "POS-Walmart",
+   "Province": "MN",
+   "Transaction_Date": "14-02-2020"
+ },
+ {
+   "Transaction_id": 3,
+   "Account_Number": "4000-1956-2001",
+   "Transaction_amount": -1600,
+   "Transcation_channel": "UPI transfer",
+   "Province": "MN",
+   "Transaction_Date": "19-01-2020"
+ },
+ {
+   "Transaction_id": 4,
+   "Account_Number": "4000-1956-2001",
+   "Transaction_amount": -6000,
+   "Transcation_channel": "Bankers cheque",
+   "Province": "CA",
+   "Transaction_Date": "23-03-2020"
+ },
+ {
+   "Transaction_id": 5,
+   "Account_Number": "4000-1956-2001",
+   "Transaction_amount": -3000,
+   "Transcation_channel": "Net banking",
+   "Province": "CA",
+   "Transaction_Date": "24-04-2020"
+ },
+ {
+   "Transaction_id": 6,
+   "Account_Number": "4000-1956-2001",
+   "Transaction_amount": 23000,
+   "Transcation_channel": "cheque deposit",
+   "Province": "MN",
+   "Transaction_Date": "15-03-2020"
+ },
+ {
+   "Transaction_id": 7,
+   "Account_Number": "5000-1700-6091",
+   "Transaction_amount": 40000,
+   "Transcation_channel": "ECS transfer",
+   "Province": "NY",
+   "Transaction_Date": "19-02-2020"
+ },
+ {
+   "Transaction_id": 8,
+   "Account_Number": "5000-1700-7791",
+   "Transaction_amount": 40000,
+   "Transcation_channel": "ECS transfer",
+   "Province": "NY",
+   "Transaction_Date": "19-02-2020"
+ },
+ {
+   "Transaction_id": 9,
+   "Account_Number": "4000-1956-3401",
+   "Transaction_amount": 8000,
+   "Transcation_channel": "Cash Deposit",
+   "Province": "NY",
+   "Transaction_Date": "19-01-2020"
+ },
+ {
+   "Transaction_id": 10,
+   "Account_Number": "4000-1956-5102",
+   "Transaction_amount": -6500,
+   "Transcation_channel": "ATM withdrawal",
+   "Province": "NY",
+   "Transaction_Date": "14-03-2020"
+ },
+ {
+   "Transaction_id": 11,
+   "Account_Number": "4000-1956-5698",
+   "Transaction_amount": -9000,
+   "Transcation_channel": "Cash Deposit",
+   "Province": "NY",
+   "Transaction_Date": "27-03-2020"
+ },
+ {
+   "Transaction_id": 12,
+   "Account_Number": "4000-1956-9977",
+   "Transaction_amount": 50000,
+   "Transcation_channel": "ECS transfer",
+   "Province": "NY",
+   "Transaction_Date": "16-01-2020"
+ },
+ {
+   "Transaction_id": 13,
+   "Account_Number": "9000-1700-7777-4321",
+   "Transaction_amount": -5000,
+   "Transcation_channel": "POS-Walmart",
+   "Province": "NY",
+   "Transaction_Date": "17-02-2020"
+ },
+ {
+   "Transaction_id": 14,
+   "Account_Number": "9000-1700-7777-4321",
+   "Transaction_amount": -8000,
+   "Transcation_channel": "Shopping Cart",
+   "Province": "MN",
+   "Transaction_Date": "13-03-2020"
+ },
+ {
+   "Transaction_id": 15,
+   "Account_Number": "9000-1700-7777-4321",
+   "Transaction_amount": -2500,
+   "Transcation_channel": "Shopping Cart",
+   "Province": "MN",
+   "Transaction_Date": "21-04-2020"
+ },
+ {
+   "Transaction_id": 16,
+   "Account_Number": "5800-1700-9800-7755",
+   "Transaction_amount": -9000,
+   "Transcation_channel": "POS-Walmart",
+   "Province": "MN",
+   "Transaction_Date": "13-04-2020"
+ },
+ {
+   "Transaction_id": 17,
+   "Account_Number": "5890-1970-7706-8912",
+   "Transaction_amount": -11000,
+   "Transcation_channel": "Shopping Cart",
+   "Province": "NY",
+   "Transaction_Date": "12-03-2020"
+ }
+]

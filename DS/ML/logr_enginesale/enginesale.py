@@ -272,7 +272,7 @@ testX["Test_Prob"] = Model.predict(testX)
 # %%
 
 # Classification
-####################
+#################
 
 testX["Test_Class"] = np.where(testX["Test_Prob"] >= 0.5,1,0)
 
@@ -317,6 +317,9 @@ testX["Test_Class_2"] = np.where(testX["Test_Prob"] >= cutt_point,1,0)
 
 print(classification_report(testY,testX["Test_Class"]))
 
-#====================================*******============================================|
 
-# %%
+#====================================*******===========================================|
+
+
+
+
